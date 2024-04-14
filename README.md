@@ -1,12 +1,14 @@
-# better `adb shell`.
-This repo uses the options of [mksh](https://manpages.ubuntu.com/manpages/xenial/man1/mksh.1.html) (the android default shell) to get better shell.
+# Better `adb shell`.
+This repo uses the options of [mksh](https://manpages.ubuntu.com/manpages/xenial/man1/mksh.1.html) (the android default shell) to get a better shell.
 
-## features
+## Features
+
+### General
 * Colored prompt with path and color difference between successes and fail statuses:
 
 ![screenshot-of-prompt](screenshots/prompt.png)
 
-* keyboard shortcuts, such as `ctrl+l` to clear the screen (in normal `adb shell` it's a shortcut for 'enter' for some reason).
+* Keyboard shortcuts, such as `ctrl+l` to clear the screen (in normal `adb shell` it's a shortcut for 'enter' for some reason).
 * `CDPATH`: you can `cd` to any directory in `/sdcard`, `Android/data` or `/` without typing the full path 
 (for example `cd com.android.chrome` even when you are in `/` directory)
 
@@ -16,7 +18,7 @@ This repo uses the options of [mksh](https://manpages.ubuntu.com/manpages/xenial
 * one alias to fix the typo `sl` => `ls`.
 
 ### More aliases
-* basic commands: `rd` and `md`.
+* basic commands: `rd` (`rmdir`) and `md` (`mkdir`).
 * `cls`(clear the screen)
 * `rmtree` (remove folder)
 * `..` and `cd..` => `cd ..`
@@ -27,8 +29,9 @@ clone this repo:
 ```bash
 git clone https://github.com/matan-h/adb-shell
 ```
+### linux/macos
 `chmod +x` and run the `adb-shell.sh` file
-(it's a short file, highly recommend you go and read it [and possibly also the `startup.sh` file] before executing)
+(it's a short file, highly recommend you go and read [it](https://github.com/matan-h/adb-shell/blob/main/adb-shell.sh) [and possibly also the `startup.sh` file] before executing)
 ```bash
 chmod +x adb-shell.sh
 ./adb-shell.sh
@@ -40,13 +43,23 @@ To make this `adb-shell` globally accessible ether add this to your `$PATH` or a
 # add this to your .rc file
 alias adb-shell="<PATH TO THIS REPO>/adb-shell.sh"
 ```
+### Windows
+Run the `adb-shell.ps1` script (it's a short file, highly recommend you go and read [it](https://github.com/matan-h/adb-shell/blob/main/adb-shell.ps1) [and possibly also the `startup.sh` file] before executing)
+```powershell
+powershell -executionpolicy bypass -File .\adb-shell.ps1
+```
+To make this `adb-shell` globally accessible ether add this to your `$PATH` or add an `alias` to this file:
 
-> Windows instructions coming soon.
+```powershell
+# add this to your powershell $PROFILE file (most likely $HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1)
+set-alias "adb-shell" "<PATH TO THIS REPO>\adb-shell.ps1"
+```
+<!-- TODO: There are better ways to deliver PS1 scripts than alias, since this requires setting the execution policy. -->
 
 ## Advanced Installation
 
-The `adb-shell.sh` just push `startup.sh` and start `adb shell` with the config file.
-That means, you can skip this automated script, and config it manually, using:
+The `adb-shell.sh/.ps1` just pushes `startup.sh` and starts `adb shell` with the config file.
+That means, you can skip this automated script, and configure it manually, using:
 ```shell
 STARTUP=/sdcard/.adb/startup.sh
 alias adb-shell="adb shell -t \"HOME='/sdcard' ENV='$STARTUP' sh -i\""
