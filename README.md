@@ -29,7 +29,7 @@ clone this repo:
 ```bash
 git clone https://github.com/matan-h/adb-shell
 ```
-### linux/macos
+### Linux/macOS
 `chmod +x` and run the `adb-shell.sh` file
 (it's a short file, highly recommend you go and read [it](https://github.com/matan-h/adb-shell/blob/main/adb-shell.sh) [and possibly also the `startup.sh` file] before executing)
 ```bash
@@ -55,6 +55,12 @@ To make this `adb-shell` globally accessible ether add this to your `$PATH` or a
 set-alias "adb-shell" "<PATH TO THIS REPO>\adb-shell.ps1"
 ```
 <!-- TODO: There are better ways to deliver PS1 scripts than alias, since this requires setting the execution policy. -->
+
+## History experimental feature
+[history is disabled by default in the android shell build options](https://android.stackexchange.com/a/152093). 
+
+However, It's possible to emulate that using the shell functions (e.g. write the last command to a history file after every command.)
+The history is currently in testing state. If you want to enable it, go to `startup.sh` and change `ENABLE_EXPERIMENTAL_HISTORY` to `true`. Please open a GitHub issue for any bug/problem/suggestion.
 
 ## Advanced Installation
 
