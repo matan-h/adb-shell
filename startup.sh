@@ -1,5 +1,6 @@
 # this file should be in "/sdcard/.adb/startup.sh"
 # shellcheck shell=ksh
+ENABLE_EXPERIMENTAL_HISTORY=false # Set to true to enable the experimental history workaround
 
 # basic:
 # shellcheck disable=SC2164
@@ -69,4 +70,25 @@ if [ -x "$(command -v 'ip')" ]; then
     ifconfig | awk '/inet /{print $2}' | grep -v 127.0.0.1
   fi
 }
+if [ "$ENABLE_EXPERIMENTAL_HISTORY" = true ]; then
+  # experimental history workaround (its disabled by default in mksh for android. see android.stackexchange:152061 mirabilos answer)
+  HISTFILE="$HOME/.adb/.history"
+  # "print -s": print to the history file, which doesn't exist. This allows the shell history features.
+  if [ -f "$HISTFILE" ] ; then
+    while read -r p; do print -s "$p"; done < "$HISTFILE"
+  fi
 
+  add_to_history(){
+    # fc -ln -1: get the last command from history without numbers.
+    last_command=$(fc -ln -1 2> /dev/null)||return
+
+    last_line=$(tail -n 1 "$HISTFILE" 2>/dev/null || true)
+    if [ "$last_command" != "$last_line" ]; then
+          # Append the last command to the file
+          echo "$last_command" >> "$HISTFILE"
+      else
+          return
+      fi
+  }
+  PS1="$PS1\$(add_to_history)";
+fi
