@@ -1,6 +1,6 @@
 $STARTUP = "/sdcard/.adb/startup.sh"
 adb shell "[ -f $STARTUP ] || exit 6" ; 
-if ($LastExitCode -eq 6){ # $?: command success status (true if the last command was successful)
+if ($LastExitCode -eq 6){
     Write-Output "file not found, push with adb"
     adb push "$PSScriptRoot/startup.sh" $STARTUP
 }
