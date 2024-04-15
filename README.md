@@ -60,7 +60,7 @@ set-alias "adb-shell" "<PATH TO THIS REPO>\adb-shell.ps1"
 [history is disabled by default in the android shell build options](https://android.stackexchange.com/a/152093). 
 
 However, It's possible to emulate that using the shell functions (e.g. write the last command to a history file after every command.)
-The history is currently in testing state. If you want to enable it, go to `startup.sh` and change `ENABLE_EXPERIMENTAL_HISTORY` to `true`. Please open a GitHub issue for any bug/problem/suggestion.
+The history is currently in testing state. If you want to enable it, go to `startup.sh` and change `ENABLE_EXPERIMENTAL_HISTORY` to `true`. (then `adb push startup.sh /sdcard/.adb/startup.sh`) Please open a GitHub issue for any bug/problem/suggestion.
 
 ## Advanced Installation
 
